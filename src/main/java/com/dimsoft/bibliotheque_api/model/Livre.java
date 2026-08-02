@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "livres")
@@ -15,12 +18,15 @@ public class Livre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Le titre est obligatoire")
+    @Size(max = 200, message = "Le titre ne peut pas dépasser 200 caractères")
     @Column(nullable = false)
     private String titre;
 
     @Column(nullable = false)
     private String auteur;
 
+    @Pattern(regexp = "\\d{13}", message = "L'ISBN doit contenir 13 chiffres")
     private String isbn;
 
     private boolean disponible = true;
